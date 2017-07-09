@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<package>
+  <name>hcr_nav</name>
+  <version>0.1.0</version>
+  <description>
+    The hcr_nav package provides roslaunch scripts for starting the SLAM and Navigation
+  </description>
+  <license>Apache License 2.0</license>
+  <author email="xyxybot@gmail.com">Zhongxian</author>
+  <maintainer email="xyxybot@gmail.com">Zhongxian</maintainer>
+  <!--<url type="repository">https://github.com/ROBOTIS-GIT/turtlebot3</url> -->
+  <!-- <url type="website">http://turtlebot3.robotis.com</url> -->
+
+  <buildtool_depend>catkin</buildtool_depend>
+  
+  <build_depend>tf</build_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>amcl</build_depend>
+  <build_depend>map_server</build_depend>
+  <build_depend>move_base</build_depend>
+
+  <run_depend>tf</run_depend>
+  <run_depend>roscpp</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+  <run_depend>move_base</run_depend>
+  <run_depend>map_server</run_depend>  
+  <run_depend>amcl</run_depend>
+  <run_depend>gmapping</run_depend>
+  <run_depend>dwa_local_planner</run_depend>
+</package>

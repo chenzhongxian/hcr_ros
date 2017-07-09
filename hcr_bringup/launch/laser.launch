@@ -1,0 +1,7 @@
+<launch>
+
+  <arg name="laser_sensor"   default="$(env HCR_LASER_SENSOR)"/>  <!-- rplidar, hls, etc -->
+
+  <include file="$(find hcr_bringup)/launch/includes/laser/$(arg laser_sensor).launch.xml" />
+
+</launch>

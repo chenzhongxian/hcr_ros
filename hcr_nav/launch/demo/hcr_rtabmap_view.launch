@@ -1,0 +1,178 @@
+<launch>
+  <!-- 
+       Usage:
+
+       Bringup HCR:
+       $ roslaunch hcr_bringup hcr_robot.launch
+       
+       Mapping:
+       $ roslaunch hcr_nav demo_hcr_rtabmap.launch
+       
+       Visualization:
+       $ roslaunch hcr_nav demo_rtabmap_view.launch
+       
+       This launch file is a one to one replacement of the gmapping_demo.launch in the 
+       "SLAM Map Building with TurtleBot" tutorial:
+       http://wiki.ros.org/turtlebot_navigation/Tutorials/indigo/Build%20a%20map%20with%20SLAM
+       
+       For localization-only after a mapping session, add argument "localization:=true" to
+       demo_hcr_rtabmap.launch line above. Move the robot around until it can relocalize in 
+       the previous map, then the 2D map should re-appear again. You can then follow the same steps 
+       from 3.3.2 of the "Autonomous Navigation of a Known Map with TurtleBot" tutorial:
+       http://wiki.ros.org/turtlebot_navigation/Tutorials/Autonomously%20navigate%20in%20a%20known%20map
+  -->
+
+  <!-- Choose visualization -->
+  <arg name="rviz"       default="false" />
+  <arg name="rtabmapviz" default="true" />
+
+  <!-- Localization-only mode -->
+  <arg name="localization"      default="false"/>
+
+  <arg     if="$(arg localization)" name="args"  default=""/>
+  <arg unless="$(arg localization)" name="args"  default="--delete_db_on_start"/>
+  
+  <arg name="wait_for_transform"  default="0.2"/>
+  <!-- 
+      robot_state_publisher's publishing frequency in "turtlebot_bringup/launch/includes/robot.launch.xml" 
+      can be increase from 5 to 10 Hz to avoid some TF warnings.
+  -->
+
+  
+  <!-- move_base -->
+  <!--<include file="$(find hcr_nav)/launch/includes/move_base.launch.xml"/>-->
+  
+
+
+
+  <!-- Mapping -->
+  <group ns="rtabmap">
+    <!-- SLAM (robot side) -->
+    <!-- args: "delete_db_on_start" and "udebug" -->
+    <node name="rtabmap" pkg="rtabmap_ros" type="rtabmap" output="screen" args="$(arg args)">
+
+      <!--<param name="frame_id"            type="string" value="base_footprint"/>-->
+      <param name="frame_id"            type="string" value="base_link"/>
+      <!--<param name="odom_frame_id"       type="string" value="odom"/>-->
+
+      <param name="wait_for_transform"  type="bool" value="true"/>
+      <param name="wait_for_transform_duration"  type="double"   value="$(arg wait_for_transform)"/>
+
+      <param name="subscribe_depth"     type="bool"   value="true"/>
+      <param name="subscribe_scan"      type="bool"   value="true"/>
+    
+      <!-- inputs -->
+      <remap from="odom"            to="/odom"/>
+      <remap from="scan"            to="/scan"/>
+
+      <!--<remap from="rgb/image"       to="/camera/rgb/image_rect_color"/>
+      <remap from="depth/image"     to="/camera/depth_registered/image_raw"/>
+      <remap from="rgb/camera_info" to="/camera/rgb/camera_info"/>-->
+      
+      <param name="queue_size" type="int" value="20"/>
+
+      <remap from="rgb/image"       to="/camera/data_throttled_image"/>
+      <remap from="depth/image"     to="/camera/data_throttled_image_depth"/>
+      <remap from="rgb/camera_info" to="/camera/data_throttled_camera_info"/>
+      
+      <param name="rgb/image_transport"   type="string" value="compressed"/>
+      <param name="depth/image_transport" type="string" value="compressedDepth"/>
+        
+      <!-- output -->
+      <remap from="grid_map" to="/map"/>
+    
+      <!-- RTAB-Map's parameters: do "rosrun rtabmap rtabmap (double-dash)params" to see the list of available parameters. -->
+
+      <param name="RGBD/NeighborLinkRefining"    type="string" value="true"/>   <!-- Do odometry correction with consecutive laser scans -->
+      <param name="RGBD/ProximityBySpace"        type="string" value="true"/>   <!-- Local loop closure detection (using estimated position) with locations in WM -->
+      <param name="RGBD/ProximityByTime"         type="string" value="false"/>  <!-- Local loop closure detection with locations in STM -->
+      <param name="RGBD/OptimizeFromGraphEnd"    type="string" value="false"/>  <!-- Set to false to generate map correction between /map and /odom -->
+      <param name="RGBD/ProximityPathMaxNeighbors" type="string" value="10"/>    <!-- Do also proximity detection by space by merging close scans together. -->
+
+      <param name="RGBD/AngularUpdate"           type="string" value="0.1"/>    <!-- Update map only if the robot is moving -->
+      <param name="RGBD/LinearUpdate"            type="string" value="0.1"/>    <!-- Update map only if the robot is moving -->
+
+      <param name="Kp/MaxDepth"                  type="string" value="4.0"/>
+
+      <param name="Reg/Strategy"                 type="string" value="1"/>      <!-- Loop closure transformation: 0=Visual, 1=ICP, 2=Visual+ICP -->
+
+      <param name="Icp/CorrespondenceRatio"      type="string" value="0.3"/>
+      <param name="Vis/MinInliers"               type="string" value="5"/>      <!-- 3D visual words minimum inliers to accept loop closure -->
+      <param name="Vis/InlierDistance"           type="string" value="0.1"/>    <!-- 3D visual words correspondence distance -->
+
+      <param name="Rtabmap/TimeThr"              type="string" value="700"/>
+      <param name="Mem/RehearsalSimilarity"      type="string" value="0.45"/>
+
+      <!--WARN: Rtabmap: Parameter name changed: "Optimizer/Slam2D" -> "Reg/Force3DoF". 
+      Please update your launch file accordingly. Value "true" is still set to the new parameter name.-->
+      <!--<param name="Optimizer/Slam2D"             type="string" value="true"/>-->
+      <param name="Reg/Force3DoF"                type="string" value="true"/>
+
+      <param name="Grid/FromDepth"               type="string" value="false"/>   
+      
+      <!-- localization mode -->
+      <param     if="$(arg localization)" name="Mem/IncrementalMemory" type="string" value="false"/>
+      <param unless="$(arg localization)" name="Mem/IncrementalMemory" type="string" value="true"/>
+      <param name="Mem/InitWMWithAllNodes" type="string" value="$(arg localization)"/> 
+    </node>
+
+    
+    
+    
+    <!-- visualization with rtabmapviz -->
+    <node if="$(arg rtabmapviz)" pkg="rtabmap_ros" type="rtabmapviz" name="rtabmapviz" args="-d $(find rtabmap_ros)/launch/config/rgbd_gui.ini" output="screen">
+      <param name="subscribe_depth"             type="bool" value="true"/>
+      <param name="subscribe_scan"              type="bool" value="true"/>
+
+      <!--<param name="frame_id"                    type="string" value="base_footprint"/>-->
+      <param name="frame_id"            type="string" value="base_link"/>
+
+      <param name="wait_for_transform" type="bool" value="true"/>
+      <param name="wait_for_transform_duration" type="double" value="$(arg wait_for_transform)"/>
+
+      <remap from="odom"            to="/odom"/>
+      <remap from="scan"            to="/scan"/>
+
+      <!--<remap from="rgb/image"       to="/camera/rgb/image_rect_color"/>
+      <remap from="depth/image"     to="/camera/depth_registered/image_raw"/>
+      <remap from="rgb/camera_info" to="/camera/rgb/camera_info"/>-->
+
+      <param name="queue_size" type="int" value="20"/>
+
+      <remap from="rgb/image"       to="/camera/data_throttled_image"/>
+      <remap from="depth/image"     to="/camera/data_throttled_image_depth"/>
+      <remap from="rgb/camera_info" to="/camera/data_throttled_camera_info"/>
+
+      <param name="rgb/image_transport"   type="string" value="compressed"/>
+	    <param name="depth/image_transport" type="string" value="compressedDepth"/>
+    </node>
+
+
+
+    <!-- Visualisation with RVIZ -->
+    <node if="$(arg rviz)" pkg="rviz" type="rviz" name="rviz" args="-d $(find rtabmap_ros)/launch/config/demo_robot_mapping.rviz" output="screen"/>
+
+    <node pkg="nodelet" type="nodelet" name="points_xyzrgb" args="standalone rtabmap_ros/point_cloud_xyzrgb">
+
+      <!--<remap from="rgb/image"       to="/camera/rgb/image_rect_color"/>
+      <remap from="depth/image"     to="/camera/depth_registered/image_raw"/>
+      <remap from="rgb/camera_info" to="/camera/rgb/camera_info"/>-->
+
+      <remap from="rgb/image"       to="/camera/data_throttled_image"/>
+      <remap from="depth/image"     to="/camera/data_throttled_image_depth"/>
+      <remap from="rgb/camera_info" to="/camera/data_throttled_camera_info"/>
+
+      <remap from="cloud"           to="voxel_cloud" />
+      
+      <param name="rgb/image_transport"   type="string" value="compressed"/>
+      <!--<param name="rgb/image_transport"   type="string" value="theora"/>     -->
+      <param name="depth/image_transport" type="string" value="compressedDepth"/>
+      
+      <param name="queue_size" type="int" value="20"/>
+
+      <param name="voxel_size" type="double" value="0.01"/>
+    </node>
+   
+  </group>
+</launch>
+

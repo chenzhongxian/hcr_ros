@@ -1,0 +1,5 @@
+<launch>
+  <!-- hcr_teleop_key already has its own built in velocity smoother -->
+  <node pkg="hcr_teleop" type="hcr_teleop_key" name="hcr_teleop_keyboard"  output="screen">
+  </node>
+</launch>

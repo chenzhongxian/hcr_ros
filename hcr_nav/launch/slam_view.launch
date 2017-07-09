@@ -1,0 +1,5 @@
+<launch>
+
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find hcr_nav)/rviz/hcr_slam.rviz"/>
+
+</launch>

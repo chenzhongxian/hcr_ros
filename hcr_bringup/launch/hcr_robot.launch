@@ -1,0 +1,10 @@
+<launch>
+
+  <include file="$(find hcr_bringup)/launch/hcr_core.launch"/>
+  
+  <include file="$(find hcr_bringup)/launch/yocs_cmd_vel_mux.launch"/>
+
+  <!-- HCR model -->
+  <include file="$(find hcr_bringup)/launch/hcr_remote.launch" />
+
+</launch>

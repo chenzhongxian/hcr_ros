@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<package>
+  <name>hcr_bringup</name>
+  <version>0.0.0</version>
+  <description>The hcr_bringup package</description>
+
+  <license>Apache License 2.0</license>
+  <author email="xyxybot@gmail.com">Zhongxian</author>
+  <maintainer email="xyxybot@gmail.com">Zhongxian</maintainer>
+
+  <!--<url type="repository">https://github.com/ROBOTIS-GIT/turtlebot3</url> -->
+  <!-- <url type="website">http://turtlebot3.robotis.com</url> -->
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>hcr_description</build_depend>
+  <build_depend>hcr_teleop</build_depend>
+  <build_depend>robot_state_publisher</build_depend>
+  <build_depend>rosserial_python</build_depend>
+  <build_depend>rplidar_ros</build_depend>
+
+  <run_depend>hcr_description</run_depend>
+  <run_depend>hcr_teleop</run_depend>
+  <run_depend>robot_state_publisher</run_depend>
+  <run_depend>rosserial_python</run_depend>
+  <run_depend>rplidar_ros</run_depend>
+</package>

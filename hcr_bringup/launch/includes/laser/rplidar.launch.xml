@@ -1,0 +1,16 @@
+<!--http://wiki.ros.org/rplidar-->
+
+<launch>
+
+  <node name="hcr_rplidar"          pkg="rplidar_ros"  type="rplidarNode" output="screen">
+    <param name="serial_port"         type="string" value="/dev/rplidar"/>  
+    <param name="serial_baudrate"     type="int"    value="115200"/>
+    <param name="frame_id"            type="string" value="base_laser"/>
+    <param name="inverted"            type="bool"   value="false"/>
+    <param name="angle_compensate"    type="bool"   value="true"/>
+  </node>
+
+  <!-- static_transform_publisher x y z yaw pitch roll frame_id child_frame_id period_in_ms -->
+  <!--<node pkg="tf" type="static_transform_publisher" name="base2laser" args="-0.05 0 0.185 -1.4835 0 0 base_link base_laser 50" />-->
+  <node pkg="tf" type="static_transform_publisher" name="base2laser" args="-0.05 0 0.185 -1.3962 0 0 base_link base_laser 50" />
+</launch>

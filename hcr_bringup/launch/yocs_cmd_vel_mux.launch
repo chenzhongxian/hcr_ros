@@ -1,0 +1,10 @@
+<launch>
+
+  <node pkg="nodelet" type="nodelet" name="hcr_nodelet_manager" args="manager"/>
+
+  <node pkg="nodelet" type="nodelet" name="cmd_vel_mux"
+        args="load yocs_cmd_vel_mux/CmdVelMuxNodelet hcr_nodelet_manager" clear_params="true" output="screen">
+    <param name="yaml_cfg_file"  value="$(find hcr_bringup)/param/yocs_cmd_vel_mux.yaml"/>
+    <remap from="cmd_vel_mux/output/cmd_vel" to="cmd_vel"/>
+  </node>
+</launch>

@@ -1,0 +1,69 @@
+################################################################################
+# Example local_costmap configuration.
+# For more details on the parameters in this file,
+# and a full list of the parameters used by the costmaps,
+# please see http://wiki.ros.org/costmap_2d
+################################################################################
+
+local_costmap:
+
+# The costmap_2d::Costmap2DROS is highly configurable with several categories of ROS Parameters:
+# coordinate frame and tf, rate, robot description and map management.
+
+###################### Coordinate frame and tf parameters ######################
+
+# ~<name>/global_frame (string, default: "/map")
+#     The global frame for the costmap to operate in.
+  global_frame: /odom
+
+# ~<name>/robot_base_frame (string, default: "base_link")
+#     The name of the frame for the base link of the robot.
+  robot_base_frame: /base_footprint
+
+# ~<name>/transform_tolerance (double, default: 0.2)
+  #     Specifies the delay in transform (tf) data that is tolerable in seconds.
+  #     This parameter serves as a safeguard to losing a link in the tf tree
+  #     while still allowing an amount of latency the user is comfortable with to exist in the system.
+  #     For example, a transform being 0.2 seconds out-of-date may be tolerable,
+  #     but a transform being 8 seconds out of date is not.
+  #     If the tf transform between the coordinate frames specified by the global_frame
+  #     and robot_base_frame parameters is transform_tolerance seconds older than ros::Time::now(),
+  #     then the navigation stack will stop the robot.
+  transform_tolerance: 1.0
+
+############################### Rate parameters ################################
+
+  update_frequency: 3.0 # double, default: 5.0. The frequency in Hz for the map to be updated.
+
+  publish_frequency: 1.0 # double, default: 0.0. The frequency in Hz for the map to be publish display information.
+
+########################### Map management parameters ##########################
+
+  static_map: false
+
+# ~<name>/rolling_window (bool, default: false)
+#     Whether or not to use a rolling window version of the costmap.
+#     If the static_map parameter is set to true, this parameter must be set to false.
+  rolling_window: true
+
+# The following parameters can be overwritten by some layers, namely the static map layer.
+
+# ~<name>/width (int, default: 10)
+#     The width of the map in meters.
+  width: 3.0
+
+# ~<name>/height (int, default: 10)
+#     The height of the map in meters.
+  height: 3.0
+
+# ~<name>/resolution (double, default: 0.05)
+#     The resolution of the map in meters/cell.
+  resolution: 0.025
+
+# ~<name>/origin_x (double, default: 0.0)
+#     The x origin of the map in the global frame in meters.
+# origin_x: 0.0
+
+# ~<name>/origin_y (double, default: 0.0)
+#     The y origin of the map in the global frame in meters.
+# origin_y: 0.0

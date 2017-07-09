@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package>
+  <name>hcr_description</name>
+  <version>0.0.0</version>
+  <description>The hcr_description package</description>
+
+  <license>Apache License 2.0</license>
+  <author email="xyxybot@gmail.com">Zhongxian</author>
+  <maintainer email="xyxybot@gmail.com">Zhongxian</maintainer>
+
+  <!--<url type="repository">https://github.com/ROBOTIS-GIT/turtlebot3</url> -->
+  <!-- <url type="website">http://turtlebot3.robotis.com</url> -->
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>urdf</build_depend>
+  <build_depend>xacro</build_depend>
+
+  <run_depend>urdf</run_depend>
+  <run_depend>xacro</run_depend>
+</package>

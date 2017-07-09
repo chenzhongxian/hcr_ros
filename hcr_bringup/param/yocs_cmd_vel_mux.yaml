@@ -1,0 +1,36 @@
+# Configuration for subscribers to multiple cmd_vel sources.
+#
+# Individual subscriber configuration:
+#   name:           Source name
+#   topic:          The topic that provides cmd_vel messages
+#   timeout:        Time in seconds without incoming messages to consider this topic inactive
+#   priority:       Priority: an UNIQUE unsigned integer from 0 (lowest) to MAX_INT 
+#   short_desc:     Short description (optional)
+
+subscribers:
+  - name:        "Joystick control"
+    topic:       "xbox360_cmd_vel"
+    timeout:     1.0
+    priority:    3
+
+  - name:        "Mobile phone control"
+    topic:       "phone_cmd_vel"
+    timeout:     1.0
+    priority:    2
+
+  - name:        "Navigation stack"
+    topic:       "move_base_cmd_vel"
+    timeout:     1.0
+    priority:    1
+
+  - name:        "Follow control"
+    topic:       "follow_cmd_vel"
+    timeout:     1.0
+    priority:    0
+
+  - name:        "Keyboard control"
+    topic:       "keyboard_cmd_vel"
+    timeout:     1.0
+    priority:    0
+
+publisher:       "output/cmd_vel"

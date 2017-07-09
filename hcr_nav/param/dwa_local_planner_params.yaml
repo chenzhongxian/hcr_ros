@@ -1,0 +1,87 @@
+################################################################################
+# Example dwa_local_planner configuration.
+# For more details on the parameters in this file,
+# and a full list of the parameters used by the DWAPlannerROS,
+# please see http://wiki.ros.org/dwa_local_planner
+################################################################################
+
+DWAPlannerROS:
+
+###################### Robot Configuration Parameters ##########################
+
+  acc_lim_x: 1.5 # double, default: 2.5. The x acceleration limit of the robot in m/s^2
+  acc_lim_y: 0.0 # double, default: 2.5. The y acceleration limit of the robot in m/s^2
+  acc_lim_theta: 1.0 # double, default: 3.2. The rotational acceleration limit of the robot in rad/s^2
+
+  max_trans_vel: 0.25 # double, default: 0.55. The absolute value of the maximum translational velocity for the robot in m/s
+                      #     choose slightly less than the base's capability
+  min_trans_vel: 0.10 # double, default: 0.1. The absolute value of the minimum translational velocity for the robot in m/s
+                      #     this is the min trans velocity when there is negligible rotational velocity
+
+  max_vel_x: 0.25 # double, default: 0.55. The maximum x velocity for the robot in meters/sec
+  min_vel_x: -0.1 # double, default: 0.0. The minimum x velocity for the robot in m/s, negative for backwards motion.
+
+  max_vel_y: 0.0 # double, default: 0.5. The maximum y velocity for the robot in m/s
+  min_vel_y: 0.0 # double, default: 0.1. The minimum x velocity for the robot in m/s
+# trans_stopped_vel: 0.01
+
+  max_rot_vel: 1.0 # double, default: 1.0. The absolute value of the maximum rotational velocity for the robot in rad/s
+  min_rot_vel: 0.2 # double, default: 0.4. The absolute value of the minimum rotational velocity for the robot in rad/s
+# rot_stopped_vel: 0.01
+
+########################### Goal Tolerance Parameters ##########################
+
+  yaw_goal_tolerance: 0.10 # double, default: 0.05. The tolerance in radians for the controller in yaw/rotation when achieving its goal
+  xy_goal_tolerance: 0.10 # double, default: 0.10. The tolerance in meters for the controller in the x & y distance when achieving a goal
+  
+# latch_xy_goal_tolerance (bool, default: false)
+#     If goal tolerance is latched, if the robot ever reaches the goal xy location it will simply rotate in place,
+#     even if it ends up outside the goal tolerance while it is doing so. - New in navigation 1.3.1
+
+######################### Forward Simulation Parameters ########################
+
+  sim_time: 1.0 # double, default: 1.7. The amount of time to forward-simulate trajectories in seconds
+
+# sim_granularity (double, default: 0.025)
+#     The step size, in meters, to take between points on a given trajectory
+  sim_granularity: 0.025
+
+  vx_samples: 8 # integer, default: 3. The number of samples to use when exploring the x velocity space
+  vy_samples: 0 # integer, default: 10. The number of samples to use when exploring the y velocity space
+  vtheta_samples: 20 # integer, default: 20. The number of samples to use when exploring the theta velocity space
+  
+# controller_frequency (double, default: 20.0)
+#     The frequency at which this controller will be called in Hz.
+#     Uses searchParam to read the parameter from parent namespaces
+#     if not set in the namespace of the controller.
+#     For use with move_base, this means that you only need to set its "controller_frequency" parameter
+#     and can safely leave this one unset. - New in navigation 1.3.1
+
+# penalize_negative_x (bool, default: true)
+#     Whether to penalize trajectories that have negative x velocities.
+
+######################### Trajectory Scoring Parameters ########################
+
+  path_distance_bias: 32.0 # double, default: 32.0. The weighting for how much the controller should stay close to the path it was given
+  goal_distance_bias: 24.0 # double, default: 24.0. The weighting for how much the controller should attempt to reach its local goal, also controls speed
+  occdist_scale: 0.1 # double, default: 0.01. The weighting for how much the controller should attempt to avoid obstacles
+  forward_point_distance: 0.325 # double, default: 0.325. The distance from the center point of the robot to place an additional scoring point, in meters
+  stop_time_buffer: 0.2 # double, default: 0.2. The amount of time that the robot must stop before a collision in order for a trajectory to be considered valid in seconds
+  scaling_speed: 0.25 # double, default: 0.25. The absolute value of the veolicty at which to start scaling the robot's footprint, in m/s
+  max_scaling_factor: 0.2 # double, default: 0.2. The maximum factor to scale the robot's footprint by
+  
+####################### Oscillation Prevention Parameters ######################
+
+  oscillation_reset_dist: 0.05 # double, default: 0.05. How far the robot must travel in meters before oscillation flags are reset
+  
+############################ Global Plan Parameters ############################
+
+# prune_plan (bool, default: true)
+#     Defines whether or not to eat up the plan as the robot moves along the path.
+#     If set to true, points will fall off the end of the plan once the robot moves 1 meter past them.
+
+
+################################### Debugging ##################################
+# publish_traj_pc : true
+# publish_cost_grid_pc: true
+# global_frame_id: odom
