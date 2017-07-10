@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<package>
+  <name>hcr_ros</name>
+  <version>1.0.0</version>
+  <description>ROS package for HCRbot (meta package)</description>
+
+  <license>Apache License 2.0</license>
+
+  <author email="xyxybot@gmail.com">Zhongxian</author>
+  <maintainer email="xyxybot@gmail.com">Zhongxian</maintainer>
+
+  <url type="repository">https://github.com/chenzhongxian/hcr_ros</url>
+  <url type="website">https://medium.com/@xyxy</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>hcr_bringup</build_depend>
+  <build_depend>hcr_description</build_depend>
+  <build_depend>hcr_nav</build_depend>
+  <build_depend>hcr_teleop</build_depend>
+
+  <run_depend>hcr_bringup</run_depend>
+  <run_depend>hcr_description</run_depend>
+  <run_depend>hcr_nav</run_depend>
+  <run_depend>hcr_teleop</run_depend>
+
+</package>
+

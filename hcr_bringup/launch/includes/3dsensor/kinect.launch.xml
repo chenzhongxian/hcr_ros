@@ -1,7 +1,7 @@
 <launch>
   <!-- "camera" should uniquely identify the device. All topics are pushed down
        into the "camera" namespace, and it is prepended to tf frame ids. -->
-  <arg name="camera"      default="camera"/>
+  <arg name="camera"      default="kinect"/>
   <arg name="publish_tf"  default="false"/>
   <!-- Factory-calibrated depth registration -->
   <arg name="depth_registration"              default="true"/>
@@ -34,12 +34,11 @@
     <arg name="disparity_processing"            value="$(arg disparity_processing)"/>               
     <arg name="disparity_registered_processing" value="$(arg disparity_registered_processing)"/>    
 
-    <!--<arg name="rgb_frame_id"       value="kinect_rgb_optical_frame" />-->
-    <!--<arg name="depth_frame_id"     value="kinect_depth_optical_frame" />-->
-    <!--<arg name="rgb_frame_id"       value="kinect_rgb_frame" />-->
-    <!--<arg name="depth_frame_id"     value="kinect_depth_frame" />-->
+    <arg name="rgb_frame_id"       value="kinect_rgb_frame" />
+    <arg name="depth_frame_id"     value="kinect_depth_frame" />
   </include>
 
   <!-- static_transform_publisher x y z yaw pitch roll frame_id child_frame_id period_in_ms -->
-  <node pkg="tf" type="static_transform_publisher" name="base_to_kinect_broadcaster" args="-0.14 0 0.60 0 0 0 base_link kinect_depth_frame 100" />                                                                                         
+  <node pkg="tf" type="static_transform_publisher" name="base2kinect_rgb" args="-0.14 0 0.60 -1.5707963 0 -1.5707963 base_link kinect_rgb_frame 100" />
+  <node pkg="tf" type="static_transform_publisher" name="base2kinect_depth" args="-0.14 0 0.60 -1.5707963 0 -1.5707963 base_link kinect_depth_frame 100" />                                                                                          
 </launch>

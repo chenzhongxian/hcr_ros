@@ -11,13 +11,13 @@
   <!-- 3dsensor -->
   <include file="$(find freenect_launch)/launch/freenect.launch">
      <arg name="depth_registration" value="True" />
-     <arg name="rgb_frame_id"       value="kinect_rgbframe" />
-     <arg name="depth_frame_id"     value="kinect_depthframe" />
+     <arg name="rgb_frame_id"       value="kinect_rgb_frame" />
+     <arg name="depth_frame_id"     value="kinect_dep_thframe" />
   </include>
 
   <!-- static_transform_publisher x y z yaw pitch roll frame_id child_frame_id period_in_ms -->
-  <node pkg="tf" type="static_transform_publisher" name="base2kinect_rgb" args="-0.14 0 0.60 -1.5707963 0 -1.5707963 base_link kinect_rgbframe 100" />
-  <node pkg="tf" type="static_transform_publisher" name="base2kinect_depth" args="-0.14 0 0.60 -1.5707963 0 -1.5707963 base_link kinect_depthframe 100" /> 
+  <node pkg="tf" type="static_transform_publisher" name="base2kinect_rgb" args="-0.14 0 0.60 -1.5707963 0 -1.5707963 base_link kinect_rgb_frame 100" />
+  <node pkg="tf" type="static_transform_publisher" name="base2kinect_depth" args="-0.14 0 0.60 -1.5707963 0 -1.5707963 base_link kinect_depth_frame 100" /> 
 
   <arg name="rate"  default="5"/>
   <arg name="decimation"  default="1"/> <!-- Reduce the image size, e.g., 2 means "width/2 x height/2". -->

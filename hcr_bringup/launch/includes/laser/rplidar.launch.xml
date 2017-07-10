@@ -11,6 +11,5 @@
   </node>
 
   <!-- static_transform_publisher x y z yaw pitch roll frame_id child_frame_id period_in_ms -->
-  <!--<node pkg="tf" type="static_transform_publisher" name="base2laser" args="-0.05 0 0.185 -1.4835 0 0 base_link base_laser 50" />-->
   <node pkg="tf" type="static_transform_publisher" name="base2laser" args="-0.05 0 0.185 -1.3962 0 0 base_link base_laser 50" />
 </launch>

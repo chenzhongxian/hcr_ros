@@ -1,0 +1,32 @@
+<launch>
+  <include file="$(find freenect_launch)/launch/freenect.launch">
+     <arg name="depth_registration" value="True" />
+     <arg name="rgb_frame_id"       value="kinect_rgb_optical_frame" />
+     <arg name="depth_frame_id"     value="kinect_depth_optical_frame" />
+  </include>
+
+  <!-- static_transform_publisher x y z yaw pitch roll frame_id child_frame_id period_in_ms -->
+  <node pkg="tf" type="static_transform_publisher" name="base_to_kinect_rgb_broadcaster" args="-0.14 0 0.60 -1.5707963 0 -1.5707963 base_link kinect_rgb_optical_frame 50" />
+  <node pkg="tf" type="static_transform_publisher" name="base_to_kinect_depth_broadcaster" args="-0.14 0 0.60 -1.5707963 0 -1.5707963 base_link kinect_depth_optical_frame 50" /> 
+
+  <arg name="rate"  default="5"/>
+  <arg name="decimation"  default="1"/> <!-- Reduce the image size, e.g., 2 means "width/2 x height/2". -->
+  <arg name="approx_sync" default="true" />
+
+  <!-- Use same nodelet used by Freenect/OpenNI -->
+  <group ns="camera">
+    <node pkg="nodelet" type="nodelet" name="data_throttle" args="load rtabmap_ros/data_throttle camera_nodelet_manager" output="screen">
+      <param name="rate" type="double" value="$(arg rate)"/>
+      <param name="decimation" type="int" value="$(arg decimation)"/>
+      <param name="approx_sync" type="bool" value="$(arg approx_sync)"/>
+
+      <remap from="rgb/image_in"       to="rgb/image_rect_color"/>
+      <remap from="depth/image_in"     to="depth_registered/image_raw"/>
+      <remap from="rgb/camera_info_in" to="rgb/camera_info"/>
+
+      <remap from="rgb/image_out"       to="data_throttled_image"/>
+      <remap from="depth/image_out"     to="data_throttled_image_depth"/>
+      <remap from="rgb/camera_info_out" to="data_throttled_camera_info"/>
+    </node>
+  </group>      
+</launch>

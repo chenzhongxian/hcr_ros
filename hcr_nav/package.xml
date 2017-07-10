@@ -8,8 +8,9 @@
   <license>Apache License 2.0</license>
   <author email="xyxybot@gmail.com">Zhongxian</author>
   <maintainer email="xyxybot@gmail.com">Zhongxian</maintainer>
-  <!--<url type="repository">https://github.com/ROBOTIS-GIT/turtlebot3</url> -->
-  <!-- <url type="website">http://turtlebot3.robotis.com</url> -->
+
+  <url type="repository">https://github.com/chenzhongxian/hcr_ros</url> 
+  <url type="website">https://medium.com/@xyxy</url>
 
   <buildtool_depend>catkin</buildtool_depend>
   

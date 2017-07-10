@@ -1,7 +1,7 @@
 <launch>
 <!-- "camera" should uniquely identify the device. All topics are pushed down
        into the "camera" namespace, and it is prepended to tf frame ids. -->
-  <arg name="camera"      default="camera"/>
+  <arg name="camera"      default="r200"/>
   <arg name="publish_tf"  default="false"/>
   <!-- Factory-calibrated depth registration 
        NOTE: HW Registration not supported by R200 camera -->
@@ -33,9 +33,13 @@
     <arg name="depth_processing"                value="$(arg depth_processing)"/>                   
     <arg name="depth_registered_processing"     value="$(arg depth_registered_processing)"/>        
     <arg name="disparity_processing"            value="$(arg disparity_processing)"/>               
-    <arg name="disparity_registered_processing" value="$(arg disparity_registered_processing)"/>    
+    <arg name="disparity_registered_processing" value="$(arg disparity_registered_processing)"/>
+
+    <arg name="color_frame_id"       value="r200_rgb_frame" />
+    <arg name="depth_frame_id"       value="r200_depth_frame" /> 
   </include>
 
   <!-- static_transform_publisher x y z yaw pitch roll frame_id child_frame_id period_in_ms -->
-    <node pkg="tf" type="static_transform_publisher" name="base_to_r200_broadcaster" args="0.085 0 0.265 0 0 0 base_link r200_depth_frame 100" />                                                                                       
+  <node pkg="tf" type="static_transform_publisher" name="base2r200_broadcaster" args="0.085 0 0.265 0 0 0 base_link r200_rgb_frame 100" />
+  <node pkg="tf" type="static_transform_publisher" name="base2r200_broadcaster" args="0.085 0 0.265 0 0 0 base_link r200_depth_frame 100" />                                                                
 </launch>
