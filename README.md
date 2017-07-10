@@ -30,7 +30,7 @@ or you can visit [https://v.qq.com/x/page/e05237crki8.html](https://v.qq.com/x/p
 
 
 
-## Table of Contents
+## Documents
 
 [HCRbot Index]
 
