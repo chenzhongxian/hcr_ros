@@ -1,10 +1,11 @@
 <?xml version="1.0"?>
 <package>
   <name>hcr_bringup</name>
-  <version>0.0.1</version>
+  <version>1.0.0</version>
   <description>The hcr_bringup package</description>
 
   <license>Apache License 2.0</license>
+  
   <author email="xyxybot@gmail.com">Zhongxian</author>
   <maintainer email="xyxybot@gmail.com">Zhongxian</maintainer>
   

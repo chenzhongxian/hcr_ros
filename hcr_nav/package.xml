@@ -1,11 +1,12 @@
 <?xml version="1.0"?>
 <package>
   <name>hcr_nav</name>
-  <version>0.1.0</version>
+  <version>1.0.0</version>
   <description>
     The hcr_nav package provides roslaunch scripts for starting the SLAM and Navigation
   </description>
   <license>Apache License 2.0</license>
+  
   <author email="xyxybot@gmail.com">Zhongxian</author>
   <maintainer email="xyxybot@gmail.com">Zhongxian</maintainer>
 

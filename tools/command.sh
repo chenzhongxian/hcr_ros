@@ -56,7 +56,6 @@ roslaunch hcr_nav nav_view.launch
 roslaunch realsense_camera r200_nodelet_default.launch
 rqt_image_view
 
-
 ###########################################################
 # RTAB map
 ###########################################################
